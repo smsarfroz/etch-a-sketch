@@ -32,7 +32,10 @@ button.addEventListener('click', () => {
 });
 
 console.log(squareSize);
-
+function random_rgba() {
+    var o = Math.round, r = Math.random, s = 255;
+    return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+}
 function generateGrid() {
     
     const totalSize = 50;
@@ -57,11 +60,18 @@ function generateGrid() {
             const squareDimension = 960/squareSize;
             const square = document.createElement("div");
             square.classList.add("square");
-            square.style.cssText = `width: ${squareDimension}px; height: ${squareDimension}px; border:2px solid black`;
+            square.style.cssText = `width: ${squareDimension}px; height: ${squareDimension}px`;
             row.appendChild(square);
+            // ; border:2px solid black
+            const col = random_rgba();
 
+            //note - progressive darkening effect doesn't work yet
             square.addEventListener('mouseenter', () => {
-                square.style.backgroundColor = 'red';
+                let curOpacity = parseFloat(square.style.opacity) || 0; 
+                square.style.backgroundColor = col;
+                if(curOpacity < 1) {
+                    square.style.opacity+=0.1;
+                }
             });
         }
 
